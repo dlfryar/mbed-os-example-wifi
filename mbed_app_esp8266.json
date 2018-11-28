@@ -1,13 +1,21 @@
 {
     "config": {
+        "main-stack-size": {
+            "value": 4000
+        },
         "wifi-ssid": {
             "help": "WiFi SSID",
             "value": "\"SSID\""
         },
         "wifi-password": {
             "help": "WiFi Password",
-            "value": "\"PASSWORD\""
-        }
+            "value": "\"Password\""
+        },
+        "swo-enabled": {
+            "help"      : "Enable single wire output disabling UART/stdio",
+            "options"   : [null, 1],
+            "value"     : null
+          }
     },
     "target_overrides": {
         "*": {
@@ -24,6 +32,15 @@
         "NUCLEO_F401RE": {
             "wifi-tx": "D8",
             "wifi-rx": "D2"
+        },
+        "MM": {
+            "esp8266.tx": "WIFI_CELLULAR_TX",
+            "esp8266.rx": "WIFI_CELLULAR_RX",
+            "esp8266.rts": "NC",
+            "esp8266.cts": "NC",
+            "esp8266.debug": true,
+            "target.stdio_uart_tx": "MAIN_TX",
+            "target.stdio_uart_rx": "MAIN_RX"
         }
     }
 }

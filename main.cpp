@@ -19,6 +19,21 @@
 
 WiFiInterface *wifi;
 
+DigitalOut wifi_reset_n(RESET_N, 1); // reset line high to deassert
+DigitalOut wifi_prog_no(PROG_WIFI_N, 1); // boot from flash mode
+DigitalOut wifi_no(WIFI_N, 1); // configure mux for wifi
+DigitalOut cell_power_control(CELL_PWR_EN, 0); // turn off cell
+DigitalOut gnss_power_control(GPS_PWR_EN, 0);  // turn off gps
+DigitalOut wifi_power_enable(WIFI_PWR_EN, 1); // vcc power on
+
+#if defined(MBED_CONF_APP_SWO_ENABLED) && (MBED_CONF_APP_SWO_ENABLED == 1)
+FileHandle *mbed::mbed_override_console(int fd)
+{
+    static SerialWireOutput swo_serial;
+    return &swo_serial;
+}
+#endif // MBED_CONF_APP_SWO_ENABLED
+
 const char *sec2str(nsapi_security_t sec)
 {
     switch (sec) {
@@ -126,6 +141,9 @@ void http_demo(NetworkInterface *net)
 int main()
 {
     int count = 0;
+
+    wifi_power_enable.write(1);
+    wait(1); // wait a second for the ESP to come up after power on
 
     printf("WiFi example\n");
 
