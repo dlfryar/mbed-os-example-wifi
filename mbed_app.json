@@ -11,7 +11,13 @@
     },
     "target_overrides": {
         "*": {
+            "platform.default-serial-baud-rate": 115200,
+            "platform.stdio-baud-rate": 115200,
             "platform.stdio-convert-newlines": true
+        },
+        "MM": {
+            "target.stdio_uart_tx": "MAIN_TX",
+            "target.stdio_uart_rx": "MAIN_RX"    
         }
     }
 }
